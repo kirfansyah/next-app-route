@@ -23,11 +23,3 @@ const DetailProductPage = (props: DetailProductPageProps) => {
 };
 
 export default DetailProductPage;
-
-// export default function DetailProductPage(props: DetailProductPageProps) {
-//   return (
-//     <div>
-//       <h1>Detail Product Page : </h1>
-//     </div>
-//   );
-// }
