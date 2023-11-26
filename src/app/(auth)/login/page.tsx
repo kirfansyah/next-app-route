@@ -1,15 +1,34 @@
 "use client";
 
 import Link from "next/link";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 const LoginPage = () => {
-  const handleLogin = (event: any) => {
+  const { push } = useRouter();
+  const handleLogin = async (event: any) => {
     event.preventDefault();
+
+    try {
+      const res = await signIn("credentials", {
+        redirect: false,
+        email: event.target.email.value,
+        password: event.target.password.value,
+        callbackUrl: "/dashboard",
+      });
+      if (!res?.error) {
+        push("/dashboard");
+      } else {
+        console.log(res.error);
+      }
+    } catch (error) {
+      console.log(error);
+    }
     fetch("/api/auth/login", {
       method: "POST",
       body: JSON.stringify({
-        email: event.currentTarget.email.value,
-        password: event.currentTarget.password.value,
+        email: event.target.email.value,
+        password: event.target.password.value,
       }),
     });
   };
