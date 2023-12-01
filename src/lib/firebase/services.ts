@@ -30,10 +30,12 @@ export async function retriveDataById(collectionName: string, id: string) {
   return data;
 }
 
-export async function register(
-  data: { fullname: string; email: string; password: string; role?: string },
-  callback: Function
-) {
+export async function register(data: {
+  fullname: string;
+  email: string;
+  password: string;
+  role?: string;
+}) {
   const q = query(
     collection(firestore, "users"),
     where("email", "==", data.email)
@@ -46,17 +48,19 @@ export async function register(
   }));
 
   if (users.length > 0) {
-    return callback({ status: false, message: "Email already exists" });
+    return { status: false, statusCode: 400, message: "Email already exists" };
   } else {
     data.role = "admin";
     data.password = await bcrypt.hash(data.password, 10);
-
-    await addDoc(collection(firestore, "users"), data)
-      .then(() => {
-        callback({ status: true, message: "User created successfully" });
-      })
-      .catch((error) => {
-        callback({ status: false, message: error.message });
-      });
+    try {
+      await addDoc(collection(firestore, "users"), data);
+      return {
+        status: true,
+        statusCode: 200,
+        message: "User created successfully",
+      };
+    } catch (error) {
+      return { status: false, statusCode: 400, message: "Register Failed" };
+    }
   }
 }
