@@ -5,10 +5,12 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-const LoginPage = () => {
+const LoginPage = ({ searchParams }: any) => {
   const { push } = useRouter();
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(false);
+
+  const callbackUrl = searchParams?.callbackUrl || "/";
   const handleLogin = async (event: any) => {
     event.preventDefault();
     setError("");
@@ -19,12 +21,12 @@ const LoginPage = () => {
         redirect: false,
         email: event.target.email.value,
         password: event.target.password.value,
-        callbackUrl: "/dashboard",
+        callbackUrl: callbackUrl || "/",
       });
       if (!res?.error) {
         event.target.reset();
         setLoading(false);
-        push("/dashboard");
+        push(callbackUrl);
       } else {
         setLoading(false);
 
