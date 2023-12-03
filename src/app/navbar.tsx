@@ -7,7 +7,7 @@ import { useSession } from "next-auth/react";
 
 const Navbar = () => {
   const pathname = usePathname();
-  const router = useRouter();
+
   const { data: session, status }: { data: any; status: string } = useSession();
 
   return (
