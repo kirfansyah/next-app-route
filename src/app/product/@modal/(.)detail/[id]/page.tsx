@@ -10,7 +10,7 @@ const DetailProductPage = async (props: any) => {
   const product = await getData(
     "http://localhost:3000/api/product/?id=" + params.id
   );
-  console.log(product.data);
+  // console.log(product.data);
 
   return (
     <Modal>
