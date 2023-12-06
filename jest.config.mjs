@@ -21,6 +21,11 @@ const config = {
     "!**/*.types.ts",
     "!<rootDir>/.next/**",
     "!<rootDir>/*.config.js",
+    "!<rootDir>/*.config.ts",
+    "!<rootDir>/src/app/api/**",
+    "!<rootDir>/src/lib/**",
+    "!<rootDir>/src/middlewares/**",
+    "!<rootDir>/src/middleware.ts",
   ],
 
   testEnvironment: "jest-environment-jsdom",
